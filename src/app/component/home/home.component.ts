@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Employee } from 'src/app/model/employee';
 import { HttpService } from 'src/app/service/http.service';
 
 @Component({
@@ -9,13 +10,18 @@ import { HttpService } from 'src/app/service/http.service';
 export class HomeComponent implements OnInit {
 
   public employeeCount:number=10;
+  public employeeDetails:Employee[]=[];
 
   constructor(private httpService: HttpService){
 
   }
 
   ngOnInit(): void {
-    this.httpService.getEmployeeData().subscribe(data=>console.log(data));
+    this.httpService.getEmployeeData().subscribe(data=>{
+      this.employeeDetails=data.data
+      this.employeeCount=this.employeeDetails.length;
+      console.log(this.employeeDetails);
+    });
   }
 
 }
